@@ -46,7 +46,7 @@ function Op.opfunc(motion, cfg, cmode, ctype)
     local ctx = {
         cmode = cmode,
         cmotion = cmotion,
-        ctype = is_blockx and U.ctype.blockwise or ctype,
+        ctype = ctype,
         range = range,
     }
 
@@ -62,7 +62,7 @@ function Op.opfunc(motion, cfg, cmode, ctype)
         range = range,
     }
 
-    if motion ~= nil and (is_blockx or ctype == U.ctype.blockwise) then
+    if motion ~= nil and ctype == U.ctype.blockwise then
         ctx.cmode = Op.blockwise(params, is_partial)
     else
         ctx.cmode = Op.linewise(params)
@@ -139,7 +139,7 @@ function Op.linewise(param)
     local cmode = U.cmode.uncomment
 
     ---When commenting multiple line, it is to be expected that indentation should be preserved
-    ---So, When looping over multiple lines we need to store the indentation of the mininum length (except empty line)
+    ---So, When looping over multiple lines we need to store the indentation of the minimum length (except empty line)
     ---Which will be used to semantically comment rest of the lines
     local min_indent, tabbed = -1, false
 
